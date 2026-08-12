@@ -22,31 +22,32 @@ const Hero = () => {
             />
           </a>
           <div className=" hidden  text-slate-800  items-center gap-8 transition duration-500 md:flex ">
-            <a href="#" className="hover:text-green-600 transition">
+            <a href="#" className="hover:text-yellow-600 transition">
               Home
             </a>
-            <a href="#features" className="hover:text-green-600 transition">
+            <a href="#features" className="hover:text-yellow-600 transition">
               Features
             </a>
             <a
               href="#testimonials"
-              className=" hover:text-green-600 transition "
+              className=" hover:text-yellow-600 transition "
             >
               Testimonials
             </a>
-            <a href="#cta" className="hover:text-green-600 transition ">
+            <a href="#cta" className="hover:text-yellow-600 transition ">
               Contact
             </a>
           </div>
           <div className=" flex gap-2 ">
             <Link
               to="/app?state=register"
-              className="hidden  px-6 py-2  text-white  bg-green-500  rounded-full  transition-all  hover:bg-green-700 active:scale-95  md:block "
+              className="hidden  px-6 py-2  text-white  bg-yellow-500  rounded-full  transition-all  hover:bg-yellow-700 active:scale-95  md:block "
             >
               Get started
             </Link>
             <Link
-              to="/app?state=login"
+              to="/login?state=login"
+              to="/login"
               className="hidden  px-6 py-2  text-slate-700  border rounded-full  transition-all active:scale-95 hover:bg-slate-50 hover:text-slate-900  md:block "
             >
               Login
@@ -88,7 +89,7 @@ const Hero = () => {
           </a>
           <button
             onClick={() => setMenuOpen(false)}
-            className="flex p-1 text-white bg-green-600  rounded-md active:ring-3 active:ring-white aspect-square size-10 items-center justify-center hover:bg-green-700 transition"
+            className="flex p-1 text-white bg-yellow-600  rounded-md active:ring-3 active:ring-white aspect-square size-10 items-center justify-center hover:bg-yellow-700 transition"
           >
             X
           </button>
@@ -96,7 +97,7 @@ const Hero = () => {
 
         {/* Hero Section */}
         <div className="flex flex-col px-4 text-sm text-black   relative items-center justify-center md:px-16  lg:px-24 xl:px-40">
-          <div className="bg-green-300 opacity-30  absolute top-28 -z-10 left-1/4 size-72 blur-[100px] sm:size-96 xl:top-10 xl:size-120 2xl:size-132"></div>
+          <div className="bg-yellow-300 opacity-30  absolute top-28 -z-10 left-1/4 size-72 blur-[100px] sm:size-96 xl:top-10 xl:size-120 2xl:size-132"></div>
 
           {/* Avatars + Stars */}
           <div className="flex mt-24 items-center">
@@ -144,7 +145,7 @@ const Hero = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       aria-hidden="true"
-                      className="text-transparent lucide lucide-star fill-green-600"
+                      className="text-transparent lucide lucide-star fill-yellow-600"
                     >
                       <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
                     </svg>
@@ -157,13 +158,13 @@ const Hero = () => {
           {/* Headline + CTA */}
           <h1 className="max-w-5xl mt-4 text-5xl font-semibold text-center md:text-6xl md:leading-17.5">
             Land your dream job with
-            <span className="text-transparent text-nowrap bg-linear-to-r from-green-700 to-green-600 bg-clip-text ">
-              AI-Powered
+            <span className="text-transparent text-nowrap bg-linear-to-r from-yellow-700 to-yellow-600 bg-clip-text ">
+              AI-Poweyellow
             </span>
             Resumes.
           </h1>
           <p className="max-w-md my-7 text-center text-base">
-            Create, edit and download professional resumes with AI-Powered
+            Create, edit and download professional resumes with AI-Poweyellow
             assistance.
           </p>
 
@@ -171,7 +172,7 @@ const Hero = () => {
           <div className=" flex items-center gap-4 ">
             <Link
               to="/app"
-              className="flex h-12 px-9 m-1 text-white bg-green-500 rounded-full transition-colors hover:bg-green-600 ring-offset-2 ring-1 ring-green-400 items-center "
+              className="flex h-12 px-9 m-1 text-white bg-yellow-500 rounded-full transition-colors hover:bg-yellow-600 ring-offset-2 ring-1 ring-yellow-400 items-center "
             >
               Get started
               <svg
@@ -191,7 +192,7 @@ const Hero = () => {
                 <path d="m12 5 7 7-7 7"></path>
               </svg>
             </Link>
-            <button className=" flex h-12  px-7  text-slate-700  border border-slate-400 rounded-full items-center gap-2 hover:bg-green-50 transition ">
+            <button className=" flex h-12  px-7  text-slate-700  border border-slate-400 rounded-full items-center gap-2 hover:bg-yellow-50 transition ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
