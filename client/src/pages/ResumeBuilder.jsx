@@ -20,6 +20,8 @@ import ColorPicker from "../components/ColorPicker";
 import ProfessionalSummary from "../components/ProfessionalSummary";
 import ExperienceForm from "../components/ExperienceForm";
 import EducationForm from "../components/EducationForm";
+import ProjectForm from "../components/ProjectForm";
+import SkillsForm from "../components/SkillsForm";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -31,7 +33,7 @@ const ResumeBuilder = () => {
     professional_summary: "",
     experience: [],
     education: [],
-    projects: [],
+    project: [],
     skills: [],
     template: "classic",
     accent_color: "#3B82F6",
@@ -54,7 +56,7 @@ const ResumeBuilder = () => {
     { id: "summary", name: "Summary ", icon: FileText },
     { id: "experience", name: "Experience", icon: Briefcase },
     { id: "education", name: "Education", icon: GraduationCap },
-    { id: "projects", name: "Projects", icon: FolderIcon },
+    { id: "project", name: "Projects", icon: FolderIcon },
     { id: "skills", name: "Skills", icon: Sparkles },
   ];
 
@@ -76,7 +78,7 @@ const ResumeBuilder = () => {
       <div className="max-w-7xl mx-auto px-4 pb-8">
         <div className="grid lg:grid-cols-12 gap-8">
           {/* left panel- form  */}
-          <div className="relative lg:col-span-5 rounded-lg overflow-hidden">
+          <div className="relative lg:col-span-5 rounded-lg">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1">
               {/* progress bar using activeSectionIndex */}
               <hr className=" absolute top-0 left-0 right-0 border-2 border-gray-200" />
@@ -117,7 +119,6 @@ const ResumeBuilder = () => {
                       className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
                       disabled={activeSectionIndex === 0}
                     >
-                      {" "}
                       <ChevronLeft className="size-4" />
                       Previous
                     </button>
@@ -186,7 +187,34 @@ const ResumeBuilder = () => {
                     }
                   />
                 )}
+
+                {activeSection.id === "project" && (
+                  <ProjectForm
+                    data={resumeData.project}
+                    onChange={(data) =>
+                      setResumData((prev) => ({
+                        ...prev,
+                        project: data,
+                      }))
+                    }
+                  />
+                )}
+
+                {activeSection.id === "skills" && (
+                  <SkillsForm
+                    data={resumeData.skills}
+                    onChange={(data) =>
+                      setResumData((prev) => ({
+                        ...prev,
+                        skills: data,
+                      }))
+                    }
+                  />
+                )}
               </div>
+              <button className="bg-gradient-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm">
+                Save Changes
+              </button>
             </div>
           </div>
 

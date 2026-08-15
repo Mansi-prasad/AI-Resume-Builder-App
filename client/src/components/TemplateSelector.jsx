@@ -29,7 +29,7 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
     },
   ];
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1 text-sm text-blue-600 bg-gradient-to-br from-blue-50 to blue-100 ring-blue-300 hover:ring transition-all px-3 py-2 rounded "
