@@ -5,7 +5,11 @@ import microsoft from "../../assets/microsoft-com.svg";
 import walmart from "../../assets/walmart-com.svg";
 import oracle from "../../assets/oracle-com.svg";
 import amazon from "../../assets/amazon-com.svg";
+import { useSelector } from "react-redux";
+
 const Hero = () => {
+  const {user} = useSelector(state => state.auth);
+
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const logos = [google, microsoft, oracle, amazon, walmart];
@@ -41,16 +45,19 @@ const Hero = () => {
           <div className=" flex gap-2 ">
             <Link
               to="/app?state=register"
-              className="hidden  px-6 py-2  text-white  bg-yellow-500  rounded-full  transition-all  hover:bg-yellow-700 active:scale-95  md:block "
+              className="hidden  px-6 py-2  text-white  bg-yellow-500  rounded-full  transition-all  hover:bg-yellow-700 active:scale-95  md:block " hidden={user}
             >
               Get started
             </Link>
             <Link
               to="/login?state=login"
               to="/login"
-              className="hidden  px-6 py-2  text-slate-700  border rounded-full  transition-all active:scale-95 hover:bg-slate-50 hover:text-slate-900  md:block "
+              className="hidden  px-6 py-2  text-slate-700  border rounded-full  transition-all active:scale-95 hover:bg-slate-50 hover:text-slate-900  md:block " hidden={user}
             >
               Login
+            </Link>
+            <Link  to="/app" className="hidden md:block px-8 py-2 bg-yellow-500 hover:bg-yellow-700 active:scale-95  transition-all rounded-full text-white" hidden={!user}>
+            Dashboard
             </Link>
           </div>
           <button
