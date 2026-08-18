@@ -26,9 +26,13 @@ import ExperienceForm from "../components/ExperienceForm";
 import EducationForm from "../components/EducationForm";
 import ProjectForm from "../components/ProjectForm";
 import SkillsForm from "../components/SkillsForm";
+import { useSelector } from "react-redux";
+import api from "../configs/api";
+import toast from "react-hot-toast";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
+  const { token } = useSelector((state) => state.auth);
 
   const [resumeData, setResumData] = useState({
     _id: "",
@@ -45,10 +49,15 @@ const ResumeBuilder = () => {
   });
 
   const loadExistingResume = async () => {
-    const resume = dummyResumeData.find((resume) => resume._id === resumeId);
-    if (resume) {
-      setResumData(resume);
-      document.title = resume.title;
+    try {
+      const {data} = await api.get(`/api/resumes/get` + resumeId , {headers: { Authorization: token}});
+
+      if(data.resume){
+        setResumData(data.resume);
+        document.title = data.resume.title;
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -70,23 +79,58 @@ const ResumeBuilder = () => {
     loadExistingResume();
   }, []);
 
-  const changeResumeVisibility = async ()=>{
-    setResumData({...resumeData, public: !resumeData.public})
-  }
+  const changeResumeVisibility = async () => {
+try {
+  const formData = new FormData();
+  formData.append("resumeId", resumeId);
+  formData.append("resumeData", JSON.stringify({public : !resumeData.public}));
 
-  const handleShare = ()=>{
-    const frontendURL = window.location.href.split('/app')[0];
-    const resumeURL= frontendURL + "/view/" + resumeId;
+  const {data} = await api.put(`/api/resumes/update` ,formData, {headers: {Authorization : token}});
 
-    if(navigator.share){
-      navigator.share({url: resumeURL, text: "My Resume"})
-    }else{
-      alert ("Share not supported on this browser.")
+  setResumData({...resumeData, public : !resumeData.public});
+  toast.success(data.message);
+} catch (error) {
+    console.log("ERROR! saving resume: ",error);
+}
+  };
+
+  const handleShare = () => {
+    const frontendURL = window.location.href.split("/app")[0];
+    const resumeURL = frontendURL + "/view/" + resumeId;
+
+    if (navigator.share) {
+      navigator.share({ url: resumeURL, text: "My Resume" });
+    } else {
+      alert("Share not supported on this browser.");
     }
-  }
+  };
 
-  const downloadResume = ()=>{
+  const downloadResume = () => {
     window.print();
+  };
+
+  const saveResume = async () =>{
+    try {
+      let uploadResumeData = structuredClone(resumeData);
+
+      // remove image from updatedResumeData
+      if(typeof resumeData.personal_info.image === "object"){
+        delete updatedResumeData.personal_info.image
+      }
+
+      const formData = new FormData();
+      formData.append("resumeId", resumeId);
+      formData.append("resumeData", resumeId);
+      removeBackground && formData.append("removeBackground", "yes");
+      typeof resumeData.personal_info.imag === "object" && formData.append("image", resumeData.personal_info.image);
+
+      const {data} = await api.put("/api/resumes/update", formData, {headers:{ Authorization : token}});
+
+      setResumData(data.resume);
+      toast.success(data.message);
+    } catch (error) {
+      console.log("ERROR! saving resume: ", error);
+    }
   }
 
   return (
@@ -236,27 +280,43 @@ const ResumeBuilder = () => {
                   />
                 )}
               </div>
-              <button className="bg-gradient-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm">
+              <button onClick={()=>{toast.promise(saveResume, {loading: "Saving...."})}} className="bg-gradient-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm">
                 Save Changes
               </button>
             </div>
           </div>
 
-            {/* right panel - preview */}
+          {/* right panel - preview */}
           <div className="lg:col-span-7 max-lg:mt-6">
             <div className="no-print relative w-full">
               <div className="absolute bottom-3 left-0 right-0 flex items-center justify-end gap-2">
                 {resumeData.public && (
-                  <button type="button" onClick={handleShare} className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-blue-100 text-blue-600 rounded-lg ring-blue-300 hover:ring transition-colors">
-                    <Share2Icon className="size-4"/> Share
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-blue-100 text-blue-600 rounded-lg ring-blue-300 hover:ring transition-colors"
+                  >
+                    <Share2Icon className="size-4" /> Share
                   </button>
                 )}
-                <button type="button" onClick={changeResumeVisibility} className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-purple-100 text-purple-600 rounded-lg ring-purple-300 hover:ring transition-colors">
-                  {resumeData.public ? <EyeIcon className="size-4" /> : <EyeOffIcon className="size-4"/>}
-                  {resumeData.public ? "Public" : "Private" }
+                <button
+                  type="button"
+                  onClick={changeResumeVisibility}
+                  className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-purple-100 text-purple-600 rounded-lg ring-purple-300 hover:ring transition-colors"
+                >
+                  {resumeData.public ? (
+                    <EyeIcon className="size-4" />
+                  ) : (
+                    <EyeOffIcon className="size-4" />
+                  )}
+                  {resumeData.public ? "Public" : "Private"}
                 </button>
-                <button type="button" onClick={downloadResume} className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-green-100 text-green-600 rounded-lg ring-green-300 hover:ring transition-colors">
-                  <DownloadIcon className="size-4"/> Download
+                <button
+                  type="button"
+                  onClick={downloadResume}
+                  className="flex items-center p-2 px-4 gap-2 text-xs bg-gradient-to-br from-green-100 text-green-600 rounded-lg ring-green-300 hover:ring transition-colors"
+                >
+                  <DownloadIcon className="size-4" /> Download
                 </button>
               </div>
             </div>

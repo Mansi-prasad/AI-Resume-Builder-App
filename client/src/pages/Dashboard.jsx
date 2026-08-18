@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   FilePenLineIcon,
+  LoaderCircleIcon,
   PencilLineIcon,
   PlusIcon,
   TrashIcon,
@@ -30,7 +31,15 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData);
+    try {
+      const { data } = await api.get("/api/users/resumes", {
+        headers: { Authorization: token },
+      });
+
+      setAllResumes(data.resumes);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const createResume = async (e) => {
@@ -86,15 +95,42 @@ const Dashboard = () => {
   };
 
   const editTitle = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+
+      const { data } = await api.put(
+        `/api/resumes/update`,
+        { resumeId: editResumeId, resumeData: { title } },
+        { headers: { Authorization: token } },
+      );
+      setAllResumes(
+        allResumes.map((resume) =>
+          resume._id === editResumeId ? { ...resume, title } : resume,
+        ),
+      );
+      setTitle("");
+      setEditResumeId("");
+
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const deleteResume = async (resumeId) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this resume?",
-    );
-    if (confirm) {
-      setAllResumes((prev) => prev.filter((resume) => resume._id !== resumeId));
+    try {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this resume?",
+      );
+      if (confirm) {
+        const { data } = await api.delete(`/api/resumes/delete/${resumeId}`, {
+          headers: { Authorization: token },
+        });
+        setAllResumes(allResumes.filter((resume) => resume._id !== resumeId));
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
     }
   };
 
@@ -263,7 +299,10 @@ const Dashboard = () => {
                   onChange={(e) => setResume(e.target.files[0])}
                 />
               </div>
-              <button className="w-full py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors">
+              <button disabled={isLoading}  className="w-full py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors flex gap-1 items-center justify-center">
+                {isLoading && (
+                  <LoaderCircleIcon className="animate-spin size-4 text-white" />
+                )}
                 {isLoading ? "Uploading..." : "Upload Resume"}
               </button>
               <XIcon
