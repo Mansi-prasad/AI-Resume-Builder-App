@@ -299,7 +299,10 @@ const Dashboard = () => {
                   onChange={(e) => setResume(e.target.files[0])}
                 />
               </div>
-              <button disabled={isLoading}  className="w-full py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors flex gap-1 items-center justify-center">
+              <button
+                disabled={isLoading}
+                className="w-full py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors flex gap-1 items-center justify-center"
+              >
                 {isLoading && (
                   <LoaderCircleIcon className="animate-spin size-4 text-white" />
                 )}
