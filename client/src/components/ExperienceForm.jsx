@@ -1,5 +1,5 @@
 import { Briefcase, Loader2, Plus, Sparkles, Trash2 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../configs/api";
 import toast from "react-hot-toast";
@@ -34,7 +34,9 @@ const ExperienceForm = ({ data, onChange }) => {
   const generateDescription = async (index) => {
     setGeneratingIndex(index);
     const experience = data[index];
-    const prompt = `enhance this job description${experience.description} for the position of ${experience.position} at ${experience.company}.`;
+    // const prompt = `enhance this job description${experience.description} for the position of ${experience.position} at ${experience.company}. Limit it to 1-2 sentences.`;
+
+    const prompt = `Rewrite this job experience description for a resume. Keep the original meaning and facts, but make it short, natural, and human-sounding. Do not add new information, achievements, metrics, or exaggerated language. Use simple, clear wording and keep it to 1 sentence. Position: ${experience.position}Company: ${experience.company} Description: ${experience.description}`;
 
     try {
       const { data } = await api.post(
@@ -43,7 +45,7 @@ const ExperienceForm = ({ data, onChange }) => {
         { headers: { Authorization: token } },
       );
 
-      updateExperience(index, "description", data.enhancedContext);
+      updateExperience(index, "description", data.enhancedContent);
     } catch (error) {
       toast.error(error.message);
     } finally {

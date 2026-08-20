@@ -10,8 +10,8 @@ export const enchanceProfessionalSummary = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
     const response = await ai.chat.completions.create({
-      model : process.env.OPENAI_MODEL,
-      messages : [
+      model: process.env.OPENAI_MODEL,
+      messages: [
         {
           role: "system",
           content:
@@ -22,7 +22,7 @@ export const enchanceProfessionalSummary = async (req, res) => {
           content: userContent,
         },
       ],
-  });
+    });
     const enhancedContent = response.choices[0].message.content;
 
     return res.status(200).json({ enhancedContent });
@@ -40,8 +40,8 @@ export const enchanceJobDescription = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
     const response = await ai.chat.completions.create({
-      model : process.env.OPENAI_MODEL,
-      messages : [
+      model: process.env.OPENAI_MODEL,
+      messages: [
         {
           role: "system",
           content:
@@ -52,7 +52,7 @@ export const enchanceJobDescription = async (req, res) => {
           content: userContent,
         },
       ],
-  });
+    });
     const enhancedContent = response.choices[0].message.content;
 
     return res.status(200).json({ enhancedContent });
@@ -123,8 +123,6 @@ export const uploadResume = async (req, res) => {
     ],
   }
     `;
-    console.log("1. Starting AI test...");
-
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
       messages: [

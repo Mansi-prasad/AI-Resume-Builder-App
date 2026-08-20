@@ -1,5 +1,5 @@
 import { Loader2, Sparkles } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import api from "../configs/api.js";
@@ -11,7 +11,7 @@ const ProfessionalSummary = ({ data, onChange, setResumeData }) => {
   const generateSummary = async () => {
     try {
       setIsGenerating(true);
-      const prompt = `enhance my professional summary ${data}`;
+      const prompt = `enhance my professional summary ${data}. Keep the original meaning and facts, but make it short, natural, and human-sounding. `;
       const response = await api.post(
         `/api/ai/enhance-pro-sum`,
         { userContent: prompt },
