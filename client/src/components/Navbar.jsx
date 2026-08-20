@@ -23,7 +23,7 @@ const Navbar = () => {
           <p className="max-sm:hidden">Hi, {user?.name}</p>
           <button
             onClick={logoutUser}
-            className="bg-white hover:bg-slate-50 border border-gray-300 px-7 py-1.5 rounded-full active:scale-95 transition-all"
+            className="bg-white hover:bg-red-600 hover:text-white border border-gray-300 px-7 py-1.5 rounded-full active:scale-95 transition-all"
           >
             Logout
           </button>

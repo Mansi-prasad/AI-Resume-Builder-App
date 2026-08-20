@@ -1,29 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import google from "../../assets/google-com.svg";
-import microsoft from "../../assets/microsoft-com.svg";
-import walmart from "../../assets/walmart-com.svg";
-import oracle from "../../assets/oracle-com.svg";
-import amazon from "../../assets/amazon-com.svg";
 import { useSelector } from "react-redux";
 
 const Hero = () => {
-  const {user} = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const logos = [google, microsoft, oracle, amazon, walmart];
+  const logos = ["Nexora", "Cloudify", "TechNova", "Lumora", "Vertex"];
   return (
     <>
       <div className="min-h-screen pb-20">
         {/* Navbar */}
         <nav className="z-50 flex w-full py-4 px-6 text-sm  items-center justify-between  md:px-16 lg:px-24  xl:px-40  ">
           <a href="https://prebuiltui.com">
-            <img
-              src="/logo.svg"
-              alt="logo"
-              className="h-11 w-auto"
-            />
+            <img src="/logo.svg" alt="logo" className="h-11 w-auto" />
           </a>
           <div className=" hidden  text-slate-800  items-center gap-8 transition duration-500 md:flex ">
             <a href="#" className="hover:text-yellow-600 transition">
@@ -45,19 +36,24 @@ const Hero = () => {
           <div className=" flex gap-2 ">
             <Link
               to="/app?state=register"
-              className="hidden  px-6 py-2  text-white  bg-yellow-500  rounded-full  transition-all  hover:bg-yellow-700 active:scale-95  md:block " hidden={user}
+              className="hidden  px-6 py-2  text-white  bg-yellow-500  rounded-full  transition-all  hover:bg-yellow-700 active:scale-95  md:block "
+              hidden={user}
             >
               Get started
             </Link>
             <Link
               to="/login?state=login"
-              to="/login"
-              className="hidden  px-6 py-2  text-slate-700  border rounded-full  transition-all active:scale-95 hover:bg-slate-50 hover:text-slate-900  md:block " hidden={user}
+              className="hidden  px-6 py-2  text-slate-700  border rounded-full  transition-all active:scale-95 hover:bg-slate-50 hover:text-slate-900  md:block "
+              hidden={user}
             >
               Login
             </Link>
-            <Link  to="/app" className="hidden md:block px-8 py-2 bg-yellow-500 hover:bg-yellow-700 active:scale-95  transition-all rounded-full text-white" hidden={!user}>
-            Dashboard
+            <Link
+              to="/app"
+              className="hidden md:block px-8 py-2 bg-yellow-600 hover:bg-yellow-700 active:scale-95  transition-all rounded-full text-white"
+              hidden={!user}
+            >
+              Dashboard
             </Link>
           </div>
           <button
@@ -165,21 +161,20 @@ const Hero = () => {
           {/* Headline + CTA */}
           <h1 className="max-w-5xl mt-4 text-5xl font-semibold text-center md:text-6xl md:leading-17.5">
             Land your dream job with
-            <span className="text-transparent text-nowrap bg-linear-to-r from-yellow-700 to-yellow-600 bg-clip-text ">
-              AI-Poweyellow
+            <span className="text-transparent text-nowrap bg-linear-to-r from-yellow-700 to-yellow-600 bg-clip-text">
+              AI-Powered
             </span>
             Resumes.
           </h1>
           <p className="max-w-md my-7 text-center text-base">
-            Create, edit and download professional resumes with AI-Poweyellow
-            assistance.
+            Create, edit and download professional resumes with AI-Powered
           </p>
 
           {/* CTA Buttons */}
           <div className=" flex items-center gap-4 ">
             <Link
               to="/app"
-              className="flex h-12 px-9 m-1 text-white bg-yellow-500 rounded-full transition-colors hover:bg-yellow-600 ring-offset-2 ring-1 ring-yellow-400 items-center "
+              className="flex h-12 px-9 m-1 text-white bg-yellow-600 rounded-full transition-colors hover:bg-yellow-700 ring-offset-2 ring-1 ring-yellow-400 items-center "
             >
               Get started
               <svg
@@ -219,9 +214,7 @@ const Hero = () => {
               <span>Try demo</span>
             </button>
           </div>
-          <p
-            className="py-6 mt-14 text-slate-600"
-          >
+          <p className="py-6 mt-14 text-slate-600">
             Trusting by leading brands, including
           </p>
           <div
@@ -229,12 +222,18 @@ const Hero = () => {
             className="  flex flex-wrap max-sm:justify-center max-w-3xl w-full  mx-auto py-4  justify-between gap-6"
           >
             {logos.map((logo, index) => (
-              <img
+              // <img
+              //   key={index}
+              //   src={logo}
+              //   alt="logo"
+              //   className=" h-20 w-auto max-w-xs"
+              // />
+              <span
                 key={index}
-                src={logo}
-                alt="logo"
-                className=" h-20 w-auto max-w-xs"
-              />
+                className="text-xl font-semibold text-slate-500"
+              >
+                {logo}
+              </span>
             ))}
           </div>
         </div>

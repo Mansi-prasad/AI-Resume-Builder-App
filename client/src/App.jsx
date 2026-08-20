@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { login, setLoading } from "./app/features/authSlice";
 import api from "./configs/api.js";
 import { Toaster } from "react-hot-toast";
+import NotFound from "./components/NotFound.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,11 +43,12 @@ const App = () => {
     <Toaster/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="app" element={<Layout />}>
+        <Route path="/app" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
         </Route>
         <Route path="view/:resumeId" element={<Preview />} />
+        <Route path="*" element= {<NotFound/>} />
       </Routes>
     </>
   );
